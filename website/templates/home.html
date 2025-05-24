@@ -1,0 +1,71 @@
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
+
+<div class="container">
+  <form method="POST">
+    <div class="form-group">
+      <label for="muscle-group">Qual grupo muscular você quer treinar?</label>
+      <select class="form-control" id="muscle-group" name="muscle-group">
+        <option value="Braços">Braços</option>
+        <option value="Peito">Peito</option>
+        <option value="Costas">Costas</option>
+        <option value="Perna">Perna</option>
+        <option value="preferencia">Sem preferencia</option>
+      </select>
+      <small class="form-text text-muted">Ou especifique abaixo:</small>
+      <input type="text" class="form-control mt-2" placeholder="Outro músculo específico" name="specific-muscle">
+    </div>
+
+    <div class="form-group">
+      <label for="training-time">Há quanto tempo você treina?</label>
+      <select class="form-control" id="training-time" name="training-time">
+        <option value="básico">Menos de 1 ano</option>
+        <option value="intermediario">Entre 1 e 2 anos</option>
+        <option value="avançado">Entre 2 e 3 anos</option>
+        <option value="semideus">Mais de 3 anos</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="user-photo">Coloque aqui uma foto sua</label>
+      <input type="file" class="form-control-file" id="user-photo" name="user-photo">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar Preferências</button>
+  </form>
+</div>
+
+<h1 class="text-center my-4">Notes</h1>
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    {{ note.data }}
+    <button type="button" class="btn btn-sm btn-danger" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+
+<form method="POST">
+  <div class="form-group">
+    <textarea name="note" id="note" class="form-control" rows="3"></textarea>
+  </div>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary">Add Note</button>
+  </div>
+</form>
+
+<h2 class="mt-5">Seus Treinos</h2>
+<ul class="list-group">
+  {% for treino in trainings %}
+    <li class="list-group-item">
+      <pre>{{ treino.plan_text }}</pre>
+    </li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}
